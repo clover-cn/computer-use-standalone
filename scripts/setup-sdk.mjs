@@ -1,0 +1,16 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+const root=path.resolve('.build');
+await mkdir(root,{recursive:true});
+const url='https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.428/dotnet-sdk-8.0.428-win-x64.zip';
+const expected='cce1dc5cfb2c5b73ddd9d3658f6009deb85be3a58dbec44a6dfe3910bb32b044ad2fc6bb28c77aded70c73270a204d207fe790dcb82ffca6c7b42c1335b51c21';
+const response=await fetch(url); if(!response.ok)throw Error(`下载失败 ${response.status}`);
+const bytes=Buffer.from(await response.arrayBuffer());
+if(createHash('sha512').update(bytes).digest('hex')!==expected)throw Error('SDK SHA-512 校验失败');
+const zip=path.join(root,'sdk.zip'),sdk=path.join(root,'sdk');
+await writeFile(zip,bytes);
+const result=spawnSync('powershell.exe',['-NoProfile','-Command',`Expand-Archive -LiteralPath '${zip.replaceAll("'","''")}' -DestinationPath '${sdk.replaceAll("'","''")}' -Force`],{windowsHide:true,stdio:'inherit'});
+if(result.status!==0)throw Error('解压失败');
+console.log('本地 SDK 已就绪，版本 8.0.428');

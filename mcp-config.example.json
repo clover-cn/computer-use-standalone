@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "computer-use-standalone": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "D:\\tools\\computer-use-standalone\\server.mjs",
+        "--allow-input",
+        "--all-windows"
+      ]
+    }
+  }
+}

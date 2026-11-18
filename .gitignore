@@ -1,0 +1,44 @@
+# 依赖与构建缓存；依赖锁文件仍需提交。
+node_modules/
+/.npm-cache/
+/.build/
+/helper/bin/
+/helper/obj/
+
+# 运行时、模型与便携包由构建脚本生成，作为发布附件分发。
+/runtime/
+/dist/
+
+# 本机数据、截图和原插件参考材料。
+/artifacts/
+/.local/
+/upstream/
+/upstream-manifest.json
+
+# 本机配置迁移和固定窗口编号的验收脚本。
+/scripts/configure-host.mjs
+/scripts/paint-acceptance.mjs
+/scripts/paint-native-acceptance.ps1
+/scripts/paint-host-acceptance.ps1
+
+# 私密环境变量和凭据；允许提交无真实值的示例。
+.env
+.env.*
+!.env.example
+!.env.sample
+*.key
+*.pfx
+*.p12
+
+# 备份、临时文件及编辑器和系统缓存。
+*.bak
+*.bak.*
+*.log
+*.tmp
+*.temp
+*.user
+*.suo
+.vs/
+.DS_Store
+Thumbs.db
+desktop.ini
